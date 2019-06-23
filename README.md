@@ -1,2 +1,5 @@
 # mmWave_Depth
-mmWave data &amp; Depth image data Fusion
+## demo.py
+- Plot radar data
+- Run with python demo.py
+- hold: whether keep previous plot in one plot(True/False) 
