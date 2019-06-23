@@ -18,9 +18,7 @@ class Radar:
         self.z = []
         self.intensity = []
 
-
     def scan(self, cloud):
-        # fig = plt.figure()
         xyz_generator = pc2.read_points_list(cloud, skip_nans=True, field_names=("x", "y", "z", "intensity"))
         x = []
         y = []
@@ -32,11 +30,6 @@ class Radar:
             z.append(xyz.z)
             intensity.append(xyz.intensity)
         self.x, self.y, self.z, self.intensity = x, y, z, intensity
-        # ax = self.fig.add_subplot(111, projection='3d')
-        # ax.scatter(x, y, z)
-        # self.fig.canvas.draw()
-        # plt.pause(0.1)
-        # self.xyz_generator = xyz_generator
 
     def run(self, hold=True):
         fig = plt.figure(figsize=(20,20))
@@ -64,6 +57,6 @@ if __name__ == "__main__":
                                     formatter_class=argparse.RawTextHelpFormatter)
     # parse.add_argument('File', help="max running time")
     parse.add_argument('--hold', type=str, default='False', help='Hold plot or not')
-    args = args = parse.parse_args()
+    args = parse.parse_args()
     mmwave = Radar()
     mmwave.run(hold=False)

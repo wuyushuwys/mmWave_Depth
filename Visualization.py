@@ -58,7 +58,7 @@ if __name__ == "__main__":
                                     formatter_class=argparse.RawTextHelpFormatter)
     parse.add_argument('File', help="max running time")
     parse.add_argument('--option', type=str, default='radar', help='the type of data is visualized(depth/radar)')
-    args = args = parse.parse_args()
+    args = parse.parse_args()
 
     # my_path = os.path.abspath(os.path.dirname(__file__))
     # data = PointCloud(my_path + '/' + args.File)
