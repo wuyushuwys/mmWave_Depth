@@ -1,15 +1,19 @@
+#!/usr/bin/python3
 import rospy
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
 import sensor_msgs.point_cloud2 as pc2
-#import sensor_msgs.Image as Image
 from sensor_msgs.msg import PointCloud2
 from sensor_msgs.msg import Image
-import argparse
 from time import time
-import cv2
 from cv_bridge import CvBridge
+import argparse
+import sys
+sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
+import cv2
+from ncappzoo.apps.live_object_detector import live_object_detector
+
 
 class Radar:
     def __init__(self, scan_topic='/mmWaveDataHdl/RScan', depth_topic='/camera/depth/image'):
@@ -54,6 +58,7 @@ class Radar:
         time_base = time()
         ax.view_init(-90, 0)
         data = [[], [], [], []]
+        live_object_detector.dec()
         while not rospy.is_shutdown():
             if (not hold) or (time()-time_base > hold_time):
                 ax.clear()
@@ -69,7 +74,7 @@ class Radar:
             ax.set_ylim3d(-5, 5)
             ax.set_ylabel('y')
             ax.set_zlim3d(-5, 5)
-            ax.scatter(self.x, self.y, self.z)
+            ax.scatter(self.x, self.y, self.z, s=3, marker="o")
             data[0] += self.x
             data[1] += self.y
             data[2] += self.z
@@ -89,4 +94,6 @@ if __name__ == "__main__":
     args = parse.parse_args()
     mmwave = Radar()
     mmwave.run(hold=args.hold, hold_time=args.refresh, sampling=args.sampling)
+    print("ROS Stopped")
+    # live_object_detector.
     rospy.spin()
